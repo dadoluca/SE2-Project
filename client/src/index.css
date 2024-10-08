@@ -1,0 +1,11 @@
+body {                              
+    background-color: #EEDEA5; 
+}
+
+h1 {                                /*h1 colors and dimensions according to the figma UI model*/
+    color: #D68A06;              
+    font-weight: 600;        
+    font-family: Regular;
+    text-decoration: underline;
+}
+  
