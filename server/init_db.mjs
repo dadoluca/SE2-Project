@@ -46,13 +46,14 @@ const scryptAsync = (password, salt) => {
     await runAsync(db, `CREATE TABLE IF NOT EXISTS tickets (
         idTicket INTEGER,
         day DATE NOT NULL,
-        queue INTEGER NOT NULL,
+        service INTEGER NOT NULL,
+        counter INTEGER,
         served BOOLEAN NOT NULL,
         week INTEGER,
         month TEXT,
         year INTEGER,
-        PRIMARY KEY (IDTicket, day),
-        FOREIGN KEY (queue) REFERENCES queues (idQueue)
+        PRIMARY KEY (idTicket, day),
+        FOREIGN KEY (service) REFERENCES services (idService)
     )`);
     
     await runAsync(db, `CREATE TABLE IF NOT EXISTS services (
@@ -66,12 +67,6 @@ const scryptAsync = (password, salt) => {
       service INTEGER,
       PRIMARY KEY (counter, service),
       FOREIGN KEY (counter) REFERENCES counters (idCounter),
-      FOREIGN KEY (service) REFERENCES services (idService)
-    )`);
-
-    await runAsync(db, `CREATE TABLE IF NOT EXISTS queues (
-      idQueue INTEGER PRIMARY KEY,
-      service INTEGER,
       FOREIGN KEY (service) REFERENCES services (idService)
     )`);
 
