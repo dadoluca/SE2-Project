@@ -4,7 +4,8 @@
   "main": "server.mjs",       
   "type": "module",         
   "scripts": {
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "test":"jest"
   },
   "dependencies": {
     "express": "^4.17.1",
