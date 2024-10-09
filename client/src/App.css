@@ -2,3 +2,16 @@
   margin: 0 auto;
   text-align: center;
 }
+
+.homePage{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.buttonContainer{
+  display: flex;
+  gap: 20px; /* Spazio tra i pulsanti */
+  justify-content: center;
+}

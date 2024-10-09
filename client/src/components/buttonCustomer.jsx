@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
+import './buttonCustomer.css';
+
 const CustButton = (props) => {
     return (
         <Button className="serviceButton" variant="none">
@@ -9,7 +11,7 @@ const CustButton = (props) => {
                      {props.text}
                 </div>
                 <div className="buttonIcon">
-                     {props.icon}
+                    <i className={props.imag}></i>
                 </div>
            </div>
         </Button>
@@ -18,7 +20,7 @@ const CustButton = (props) => {
 
 CustButton.PropTypes = {
     text: PropTypes.string,
-    icon: PropTypes.icon
+    imag: PropTypes.string
 }
 
 export default CustButton;
