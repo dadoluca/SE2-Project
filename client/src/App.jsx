@@ -7,7 +7,6 @@ import { Routes, Route, useNavigate} from 'react-router-dom';
 function App() {
   return (
     <>
-      <h1>SELECT A SERVICE</h1>
       <div className="homePage">
         <Routes>
           <Route path='/' element={<HomePage/>}/>
