@@ -1,0 +1,178 @@
+/* Impostazione di base del body */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Contenitore principale */
+.container {
+    display: flex;
+    height: 100vh;
+    background-color: #FDF0CD; /* Colore di sfondo della pagina */
+}
+
+/* Sezione sinistra (2/3 della pagina) */
+.left-section {
+    width: 66.66%; /* 2/3 della larghezza */
+    padding: 20px;
+    background-color: #FDF0CD; /* Stesso colore dello sfondo */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.date {
+    font-weight: bold;
+    color: #F7981E;
+}
+
+.time {
+    font-size: 16px;
+    font-weight: bold;
+    color: #F7981E;
+}
+
+.officer-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.officer-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #F7981E; /* Sostituire con l'immagine reale */
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.officer-id {
+    font-size: 20px;
+    color: #F7981E;
+}
+
+/* Contenitore dei pulsanti */
+.actions {
+    display: flex;
+    justify-content: center; /* Centratura orizzontale */
+    align-items: center;     /* Centratura verticale (se necessario in un contenitore con altezza fissa) */
+    gap: 50px; /* Spaziatura tra i due pulsanti */
+    margin-top: 70px;
+}
+
+/* Pulsanti */
+.served-button, .call-next-button {
+    width: 200px;  /* Larghezza dei pulsanti quadrati */
+    height: 200px; /* Altezza dei pulsanti quadrati */
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;  /* Bordi arrotondati */
+    display: flex;
+    justify-content: center;
+    align-items: center;  /* Allineamento centrato del testo */
+    font-weight: bold;
+}
+
+.served-button {
+    background-color: #A5D344; /* Colore verde */
+    color: white;
+}
+
+.call-next-button {
+    background-color: #F7981E; /* Colore arancione */
+    color: white;
+}
+
+/* Linea di separazione arancione */
+.separator {
+    width: 4px; /* Spessore della linea */
+    background-color: #F7981E; /* Colore arancione */
+}
+
+/* Sezione destra (1/3 della pagina) */
+.right-section {
+    width: 33.33%; /* 1/3 della larghezza */
+    padding: 20px;
+    background-color: #FDF0CD;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Header "BILL PAYMENT" */
+.bill-payment-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.bill-payment-header h2 {
+    color: #F7981E; /* Colore arancione per il titolo */
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.serving-label {
+    font-size: 18px;
+    color: #F7981E;
+    margin-top: 10px;
+}
+
+.current-ticket {
+    font-weight: bold;
+}
+
+/* Lista dei prossimi numeri */
+.next-tickets {
+    font-size: 18px;
+    background-color: #FCD38B; /* Colore di sfondo per il contenitore "next-tickets" */
+    padding: 10px; /* Padding per dare respiro al contenuto */
+    padding-top: 0;
+    border-radius: 10px; /* Bordi arrotondati */
+    width: 80%; /* Imposta la larghezza a 100% per riempire il contenitore */
+}
+
+.next-tickets h3 {
+    color: #F7981E;
+    position: relative; /* Posizionamento relativo per poter usare il pseudo-elemento */
+    text-align: left;
+}
+
+/* Linea sotto la scritta "NEXT" */
+.next-tickets h3::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px; /* Spessore della linea */
+    background-color: #F7981E; /* Colore della linea */
+    position: absolute;
+    bottom: -5px; /* Distanza dal titolo */
+    left: 0;
+}
+
+/* Lista dei ticket successivi */
+.ticket-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ticket-list li {
+    padding: 2px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #F7981E;
+    text-align: left;
+    width: 100%;
+}
