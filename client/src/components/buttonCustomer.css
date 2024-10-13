@@ -1,0 +1,19 @@
+.serviceButton{
+    width: 150px; 
+    height: 150px; 
+    background-color: #d68a06; 
+    border-radius: 20px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.buttonText{
+    color: #EEDEA5;              
+    font-weight: 600;        
+    font-family: Regular;
+}

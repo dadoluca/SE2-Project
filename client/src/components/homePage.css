@@ -1,0 +1,5 @@
+.buttonContainer{
+    display: flex;
+    gap: 20px; /* Spazio tra i pulsanti */
+    justify-content: center;
+  }

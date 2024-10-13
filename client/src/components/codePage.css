@@ -1,0 +1,39 @@
+h1 {                                /*h1 colors and dimensions according to the figma UI model*/
+    color: #D68A06;  
+    font-weight: bold;              
+    font-size: 36px; 
+    margin-bottom: 20px;   
+    font-family: Regular;
+    text-decoration: underline;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.QRCodeContainer{
+    width: 150px; 
+    height: 150px; 
+    background-color: #d68a06; 
+    border-radius: 20px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.backHomeButton{
+    background-color: #d68a06;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+  
