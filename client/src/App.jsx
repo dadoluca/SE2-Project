@@ -1,22 +1,48 @@
 import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import HomePage from './components/homepage.jsx';
-import QRCodePage from './components/codePage.jsx';
-import { Routes, Route, useNavigate} from 'react-router-dom';
-
+import { RouterProvider, createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
+import RootLayout from './pages/RootLayout';
+import CustomerMainboard from './pages/CustomerMainboard';
+import Officer from './pages/Officer';
+import DisplayScreen from './pages/DisplayScreen';
+import ErrorPage from './pages/ErrorPage';
+import HomePage from './pages/HomePage';
 function App() {
-  return (
-    <>
-      <div className="homePage">
-        <Routes>
-          <Route path='/' element={<HomePage/>}/>
-          <Route path="/bill-payment" element={<QRCodePage/>} />
-          <Route path="/withdrawals" element={<QRCodePage/>} />
-          <Route path="/shipments" element={<QRCodePage/>}/>
-        </Routes>
-      </div>
-    </>
-  )
+  const router = createBrowserRouter([
+    {
+      element: <RootLayout/>,
+
+      /* Loading errors of a valid route.
+      This handles route loading errors and other server errors if not handled directly in components */
+      errorElement: <ErrorPage/>,
+
+      children: [
+        {
+          path: "/",
+          element: <HomePage />
+        },
+        {
+          path: "/customer-mainboard",
+          element: <CustomerMainboard />
+        },
+        {
+          path: "/officer",
+          element: <Officer />
+        },
+        {
+          path: "/display-screen",
+          element: <DisplayScreen />
+        },
+        {
+          path: "*",
+          element: <Navigate to="/" />
+        }
+
+      ],
+    },
+  
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App
