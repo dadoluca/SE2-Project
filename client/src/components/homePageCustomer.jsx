@@ -6,9 +6,9 @@ function HomePageCustomer(){
         <div>
              <h1>SELECT A SERVICE</h1>
              <div className="buttonContainer">
-                <CustButton text={"💵BILL PAYMENT"} imag={"bi bi-receipt-cutoff"} routePath={"/bill-payment"}/>
-                <CustButton text={"💳WITHDRAWALS"} imag={"bi bi-credit-card"} routePath={"/withdrawals"}/>
-                <CustButton text={"📦SHIPMENTS"} imag={"bi bi-truck"} routePath={"/shipments"}/>
+                <CustButton serviceId={1} text={"💵BILL PAYMENT"} imag={"bi bi-receipt-cutoff"} routePath={"/bill-payment"}/>
+                <CustButton serviceId={2} text={"💳WITHDRAWALS"} imag={"bi bi-credit-card"} routePath={"/withdrawals"}/>
+                <CustButton serviceId={3} text={"📦SHIPMENTS"} imag={"bi bi-truck"} routePath={"/shipments"}/>
             </div>
         </div>
      )
