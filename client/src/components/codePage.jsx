@@ -7,7 +7,7 @@ const QRCodePage = () =>{
     const navigate = useNavigate();
     
     const handleBackHome = () =>{
-        navigate('/');
+        navigate('/customer-mainboard');
     }
 
     return(

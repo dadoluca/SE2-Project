@@ -6,6 +6,8 @@ import Officer from './pages/Officer';
 import DisplayScreen from './pages/DisplayScreen';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
+import QRCodePage from './components/codePage.jsx';
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -22,7 +24,19 @@ function App() {
         },
         {
           path: "/customer-mainboard",
-          element: <CustomerMainboard />
+          element: <CustomerMainboard />,
+        },
+        {
+          path: "/customer-mainboard/bill-payment",
+          element: <QRCodePage />
+        },
+        {
+          path: "/customer-mainboard/withdrawals",
+          element: <QRCodePage />
+        },
+        {
+          path: "/customer-mainboard/shipments",
+          element: <QRCodePage />
         },
         {
           path: "/officer",
