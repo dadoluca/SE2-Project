@@ -1,21 +1,20 @@
-h1 {     
-    color: #683104;
-    font-size: 46px;
-    margin-bottom: 40px;                           /*h1 colors and dimensions according to the figma UI model*/
-    color: #D68A06;  
-    font-weight: bold;               
-    font-family: Regular;
-    text-decoration: underline;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    position: relative;
+.qrCodePage {
+    text-align: center;
+    background-color: #f5f5dc; /* Matches the color from your image */
+    padding: 20px;
 }
 
-.QRCodeContainer{
-    width: 150px; 
-    height: 150px; 
-    background-color: #d68a06; 
-    border-radius: 20px; 
+.QRCodeContainer {
+    margin: 0 auto;
+    padding: 20px; /* Add some padding to create space around the QR code */
+    display: inline-block; /* To keep QR code centered */
+}
+
+.backHomeButton {
+    width: 120px; 
+    height: 75px; 
+    background-color: #D66406;
+    border: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,16 +24,9 @@ h1 {
     font-weight: bold;
 }
 
-.backHomeButton{
-    background-color: #d68a06;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 20px;
-    font-family: Arial, sans-serif;
+
+.buttonText{
+    color: #fff;              
+    font-weight: 600;        
+    font-family: Regular;
 }
-  

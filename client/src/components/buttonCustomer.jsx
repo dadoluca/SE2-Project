@@ -18,9 +18,6 @@ function CustButton(props) {
                 <div className="buttonText">
                      {props.text}
                 </div>
-                <div className="buttonIcon">
-                    <i className={props.imag}></i>
-                </div>
            </div>
         </Button>
     );
