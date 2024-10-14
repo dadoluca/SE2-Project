@@ -21,7 +21,7 @@ export const callNextTicket = async () => {
   }
 };
 
-export const createTicket = async (idTicket, day, service, counter, served) => {
+export const createTicket = async (idService) => {
   try {
     const response = await fetch(`${API_BASE_URL}/tickets/create`, {
       method: 'POST',
@@ -29,7 +29,7 @@ export const createTicket = async (idTicket, day, service, counter, served) => {
         'Content-Type': 'application/json',
       },
       //credentials: 'include',
-      body: JSON.stringify({idTicket: idTicket, day: day, service: service, counter: counter, served: served})
+      body: JSON.stringify({ service: idService })
     });
 
     if (!response.ok) {
@@ -37,7 +37,7 @@ export const createTicket = async (idTicket, day, service, counter, served) => {
     }
 
     const data = await response.json();
-    return data; 
+    return data; // data.ticket is the new ticket
   } catch (err) {
     console.error('Failed to create a new ticket:', err);
     throw err;

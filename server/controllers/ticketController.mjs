@@ -10,7 +10,7 @@ export const createTicket = (req, res) => {
       return res.status(400).json({ errors: errors.array() });
   }
 
-  const { serviceType } = req.body;
+  const serviceType = req.body.service;
   const db = openDatabase();
   const currentDate = new Date().toISOString();
 
@@ -24,10 +24,11 @@ export const createTicket = (req, res) => {
           const nextTicketNumber = row.lastTicket ? row.lastTicket + 1 : 1;
 
           db.run(
-              `INSERT INTO tickets (number, status, counter, timestamp)
-               VALUES (?, ?, ?, ?)`,
+              `INSERT INTO tickets (number, service, status, counter, timestamp)
+               VALUES (?, ?, ?, ?, ?)`,
               [
                   nextTicketNumber,
+                  serviceType,
                   'waiting',
                   null, 
                   currentDate 
@@ -41,6 +42,7 @@ export const createTicket = (req, res) => {
                       message: "Ticket created successfully.",
                       ticket: {
                           id: this.lastID,
+                          service: serviceType,
                           number: nextTicketNumber,
                           status: 'waiting',
                           counter: null,

@@ -46,9 +46,11 @@ const scryptAsync = (password, salt) => {
     await runAsync(db, `CREATE TABLE IF NOT EXISTS tickets (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             number INTEGER,
+            service INTEGER,
             status TEXT CHECK(status IN ('waiting', 'called', 'served')) DEFAULT 'waiting',
             counter INTEGER,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (service) REFERENCES services (idService)
     )`);
     
     await runAsync(db, `CREATE TABLE IF NOT EXISTS services (
