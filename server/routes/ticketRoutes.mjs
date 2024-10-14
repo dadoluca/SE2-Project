@@ -1,15 +1,36 @@
 import express from 'express';
-import { callNextTicket, createTicket, getTicket } from '../controllers/ticketController.mjs'; 
+import { createTicket,
+         deleteTicket,
+         getTicketById,
+         getTicketStatistics,
+         getAllTickets,
+         updateTicketStatus
+        } 
+from '../controllers/ticketController.mjs'; 
+
 
 const router = express.Router();
 
-// Route to call the next ticket
-router.post('/tickets/call', callNextTicket);
 
 // Route to insert a ticket in DB
 router.post('/tickets/create', createTicket);
 
-// Route to retrieve a ticket by ID
-router.get('/tickets/:id', getTicket);
+// Endpoint to delete a specific ticket
+router.delete('/tickets/:id', deleteTicket);
+
+// Endpoint to get details of a specific ticket by ID
+router.get('/tickets/:id', getTicketById);
+
+// Endpoint to get ticket statistics
+router.get('/tickets/stats', getTicketStatistics);
+
+// Endpoint to get all tickets
+router.get('/tickets', getAllTickets);
+
+// Endpoint to update the status of a specific ticket
+router.put('/tickets/:id', updateTicketStatus);
+
+
+
 
 export default router;

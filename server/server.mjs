@@ -1,10 +1,13 @@
 import express from 'express';                   
-import ticketRoutes from './routes/ticketRoutes.mjs'; 
-import { errorMiddleware } from './middlewares/errorMiddleware.mjs';
 import passport from 'passport';
 import session from 'express-session';
-import authRoutes from './routes/authRoutes.mjs';
 import cors from 'cors';
+import ticketRoutes from './routes/ticketRoutes.mjs'; 
+import authRoutes from './routes/authRoutes.mjs';
+import queueRoutes from './routes/queueRoutes.mjs';
+import userRoutes from './routes/userRoutes.mjs';
+import { errorMiddleware } from './middlewares/errorMiddleware.mjs';
+
 
 const app = express();
 
@@ -44,6 +47,12 @@ app.use(errorMiddleware);
 
 // Use authentication routes
 app.use('/auth', authRoutes);
+
+// Use queue routes
+app.use('/queue', queueRoutes);
+
+// Use user routes
+app.use('/api/users', userRoutes);
 
 
 const PORT = process.env.PORT || 5001;

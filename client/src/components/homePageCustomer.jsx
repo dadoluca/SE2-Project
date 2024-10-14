@@ -1,7 +1,7 @@
 import CustButton from './buttonCustomer.jsx';
-import './homePage.css';
+import './homePageCustomer.css';
 
-function HomePage(){
+function HomePageCustomer(){
      return(
         <div>
              <h1>SELECT A SERVICE</h1>
@@ -14,5 +14,5 @@ function HomePage(){
      )
 }
 
-export default HomePage;
+export default HomePageCustomer;
 

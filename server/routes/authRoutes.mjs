@@ -31,9 +31,9 @@ router.post('/logout', (req, res) => {
     if (err) {
       return res.status(500).json({ error: 'An error occurred during logout.' });
     }
-    return res.status(200).json({ message: 'Logged out successfully' }); // Successful logout
+    return res.status(200).json({ message: 'Logged out successfully' });
   });
 });
 
-// Export the router as default
+
 export default router;

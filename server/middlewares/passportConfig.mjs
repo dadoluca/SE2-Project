@@ -1,28 +1,34 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import { openDatabase } from '../config/db.mjs'; // Adjust the path according to your project structure
-import { verifyPassword } from '../utils/hashUtils.mjs'; // Assuming you have a password verification utility
+import { openDatabase } from '../config/db.mjs';
+import { verifyPassword } from '../utils/hashUtils.mjs'; 
 
 // Passport Local Strategy
 passport.use(
-  new LocalStrategy(async (name, password, done) => {
-    try {
-      const db = await openDatabase(); // Open the database
-      db.get(`SELECT * FROM users WHERE name = ?`, [name], async (err, user) => {
-        if (err) return done(err); // Handle database error
-        if (!user) return done(null, false, { message: 'Incorrect name.' }); // User not found
+  new LocalStrategy({ usernameField: 'name', passwordField: 'password' }, (name, password, done) => {
+    const db = new sqlite3.Database('queue.sqlite', (err) => {
+      if (err) {
+        console.error('Failed to connect to the database:', err);
+        return done(err);
+      }
+    });
 
-        // Verify the password
-        const isValidPassword = await verifyPassword(password, user.password);
-        if (!isValidPassword) return done(null, false, { message: 'Incorrect password.' }); // Password mismatch
+    db.get(`SELECT * FROM users WHERE name = ?`, [name], async (err, user) => {
+      if (err) {
+        console.error('Error querying the database:', err);
+        return done(err);
+      }
+      if (!user) return done(null, false, { message: 'Incorrect username.' });
 
-        return done(null, user); // Successful authentication
-      });
-    } catch (err) {
-      return done(err); // Handle unexpected error
-    }
+      const isValidPassword = await verifyPassword(password, user.password);
+      if (!isValidPassword) return done(null, false, { message: 'Incorrect password.' });
+
+      return done(null, user);
+    });
   })
 );
+
+
 
 // Serialize user to session
 passport.serializeUser((user, done) => {

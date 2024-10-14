@@ -1,8 +1,9 @@
-h1 {                                /*h1 colors and dimensions according to the figma UI model*/
+h1 {     
+    color: #683104;
+    font-size: 46px;
+    margin-bottom: 40px;                           /*h1 colors and dimensions according to the figma UI model*/
     color: #D68A06;  
-    font-weight: bold;              
-    font-size: 36px; 
-    margin-bottom: 20px;   
+    font-weight: bold;               
     font-family: Regular;
     text-decoration: underline;
     text-transform: uppercase;

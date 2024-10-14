@@ -8,7 +8,8 @@ function CustButton(props) {
     const navigate = useNavigate();
 
     const handleButton = () =>{
-        navigate(props.routePath);
+        const path = '/customer-mainboard' + props.routePath;
+        navigate(path);
     }
 
     return (
