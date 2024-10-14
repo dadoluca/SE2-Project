@@ -60,3 +60,61 @@ export const getTicket = async () => {
     throw err;
   }
 };
+
+export const getQueuesData = async () => {
+  /*try {
+    const response = await fetch(`${API_BASE_URL}/?????????????????????`);
+    //, {credentials: 'include'});
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    if(response.ok)
+      return data;
+    else
+      throw err;
+  } catch (err) {
+    console.error('Failed to get the service data:', err);
+    throw err;
+  }*/
+ return {
+  //Example data
+  "services": [
+    {
+      "title": "BILL PAYMENT",
+      "icon": "💵",
+      "serving": "B123",
+      "queue": [
+        { "number": "B123", "time": "2 min" },
+        { "number": "B124", "time": "3 min" },
+        { "number": "B125", "time": "4 min" },
+        { "number": "B126", "time": "5 min" }
+      ]
+    },
+    {
+
+      "title": "WITHDRAWAL",
+      "icon": "💳",
+      "serving": "W123",
+      "queue": [
+        { "number": "W123", "time": "4 min" },
+        { "number": "W124", "time": "8 min" },
+      ]
+    },
+    {
+      "title": "SHIPMENT",
+      "icon": "📦",
+      "serving": "S123",
+      "queue": [
+        { "number": "S123", "time": "1 min" },
+        { "number": "S124", "time": "2 min" },
+        { "number": "S125", "time": "3 min" },
+        { "number": "S126", "time": "4 min" }
+      ]
+    }
+  ],
+}
+
+}
