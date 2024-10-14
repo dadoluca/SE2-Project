@@ -80,7 +80,7 @@ export const getService = async (idTicket) => {
 
 export const getAllService = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/services`);
+    const response = await fetch(`${API_BASE_URL}/services/all`);
     //, {credentials: 'include'});
 
     if (!response.ok) {
@@ -97,7 +97,7 @@ export const getAllService = async () => {
 
 export const getAllCounters = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/counters`);
+    const response = await fetch(`${API_BASE_URL}/counters/all`);
     //, {credentials: 'include'});
 
     if (!response.ok) {
@@ -125,6 +125,39 @@ export const getCounterServices = async (idCounter) => {
     return data; 
   } catch (err) {
     console.error('Failed to get counter services list:', err);
+    throw err;
+  }
+};
+
+/* Example queues data:
+{
+  "message": "Queues retrieved",
+  "services": [
+    {
+      "title": "Service1",
+      "serving": "B123",
+      "queue": ["B123", "B124", "B125"]
+    },
+    {
+      "title": "Service2",
+      "serving": "A100",
+      "queue": ["A100", "A101", "A102"]
+    }
+  ]
+} */
+export const getQueuesData = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/queues/all`);
+    //, {credentials: 'include'});
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data; 
+  } catch (err) {
+    console.error('Failed to get queues data:', err);
     throw err;
   }
 };

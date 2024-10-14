@@ -1,9 +1,10 @@
-export default function Ticket(idTicket, day, service, counter, served) { 
-    this.idTicket = idTicket;
-    this.day = day;
+export default function Ticket(id, service, number, status, counter, timestamp) { 
+    this.id = id;
     this.service = service;
+    this.number = number;
+    this.status = status;
     this.counter = counter;
-    this.served = served;
+    this.timestamp = timestamp;
 
     this.toJSON = () => {
         return {

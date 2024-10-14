@@ -20,4 +20,7 @@ router.put('/tickets/:id/assign', assignTicketToCounter);
 // Endpoint to reset the queue (clear all tickets)
 router.delete('/queue/reset', resetQueue);
 
+// Route to retrieve all queues
+router.get('/all', getQueuesData);
+
 export default router;

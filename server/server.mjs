@@ -39,6 +39,9 @@ app.use(passport.session());
 // Middleware to parse JSON data
 app.use(express.json());
 
+// Middleware for static file path
+app.use(express.static('client/public'));
+
 // API route for tickets
 app.use('/api', ticketRoutes);
 
@@ -49,10 +52,16 @@ app.use(errorMiddleware);
 app.use('/auth', authRoutes);
 
 // Use queue routes
-app.use('/queue', queueRoutes);
+app.use('/api/queues', queueRoutes);
 
 // Use user routes
 app.use('/api/users', userRoutes);
+
+// Use services routes
+app.use('/api/services', userRoutes);
+
+// Use counters routes
+app.use('/api/counters', userRoutes);
 
 
 const PORT = process.env.PORT || 5001;

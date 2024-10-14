@@ -56,7 +56,8 @@ const scryptAsync = (password, salt) => {
     await runAsync(db, `CREATE TABLE IF NOT EXISTS services (
       idService INTEGER PRIMARY KEY,
       serviceName TEXT NOT NULL,
-      serviceTime REAL NOT NULL
+      serviceTime REAL NOT NULL,
+      icon TEXT
     )`);
 
     await runAsync(db, `CREATE TABLE IF NOT EXISTS serviceForCounter (
