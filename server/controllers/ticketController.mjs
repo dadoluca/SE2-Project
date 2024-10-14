@@ -12,7 +12,7 @@ export const createTicket = (req, res) => {
 
   const { serviceType } = req.body;
   const db = openDatabase();
-  const currentDate = new Date().toISOString(); // Get current date in ISO format
+  const currentDate = new Date().toISOString();
 
   db.get(
       `SELECT MAX(number) AS lastTicket FROM tickets WHERE DATE(timestamp) = DATE('now')`,
@@ -29,8 +29,8 @@ export const createTicket = (req, res) => {
               [
                   nextTicketNumber,
                   'waiting',
-                  null, // Counter is null initially
-                  currentDate // Use the current date here
+                  null, 
+                  currentDate 
               ],
               function (insertErr) {
                   if (insertErr) {
@@ -44,7 +44,7 @@ export const createTicket = (req, res) => {
                           number: nextTicketNumber,
                           status: 'waiting',
                           counter: null,
-                          timestamp: currentDate // Use the current date here
+                          timestamp: currentDate 
                       }
                   });
               }
@@ -57,7 +57,7 @@ export const createTicket = (req, res) => {
 
 // Remove a ticket from the queue
 export const deleteTicket = (req, res) => {
-    const { id } = req.params; // Ticket ID from the URL
+    const { id } = req.params; 
     const db = openDatabase();
 
     db.run(
@@ -78,7 +78,7 @@ export const deleteTicket = (req, res) => {
 
 // Retrieve details for a specific ticket by its ID
 export const getTicketById = (req, res) => {
-    const { id } = req.params; // Ticket ID from the URL
+    const { id } = req.params; 
     const db = openDatabase();
 
     db.get(
@@ -154,6 +154,46 @@ export const updateTicketStatus = (req, res) => {
                 return res.status(500).json({ error: 'Failed to update ticket status.' });
             }
             return res.status(200).json({ message: 'Ticket status updated successfully.' });
+        }
+    );
+
+    db.close();
+};
+
+// Retrieve the next waiting ticket without calling it
+export const getNextTicket = (req, res) => {
+    const db = openDatabase();
+
+    db.get(
+        `SELECT * FROM tickets WHERE status = 'waiting' ORDER BY timestamp ASC LIMIT 1`,
+        (err, ticket) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to fetch the next ticket.' });
+            }
+
+            if (!ticket) {
+                return res.status(404).json({ message: 'No waiting tickets available.' });
+            }
+
+            return res.status(200).json({ ticket });
+        }
+    );
+
+    db.close();
+};
+
+// Retrieve all tickets currently in the "waiting" status
+export const getAllWaitingTickets = (req, res) => {
+    const db = openDatabase();
+
+    db.all(
+        `SELECT * FROM tickets WHERE status = 'waiting'`,
+        (err, tickets) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to fetch waiting tickets.' });
+            }
+
+            return res.status(200).json({ tickets });
         }
     );
 

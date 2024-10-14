@@ -70,7 +70,7 @@ export const updateUser = (req, res) => {
     let query = `UPDATE users SET name = ?, email = ?, role = ?`;
     const params = [name, email, role];
 
-    // Only hash the password if it is provided
+   
     if (password) {
         const hashedPassword = hashPassword(password);
         query += `, password = ?`;

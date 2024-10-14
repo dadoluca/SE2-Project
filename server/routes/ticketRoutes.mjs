@@ -4,9 +4,10 @@ import { createTicket,
          getTicketById,
          getTicketStatistics,
          getAllTickets,
-         updateTicketStatus
-        } 
-from '../controllers/ticketController.mjs'; 
+         updateTicketStatus,
+         getNextTicket,
+         getAllWaitingTickets
+        } from '../controllers/ticketController.mjs'; 
 
 
 const router = express.Router();
@@ -29,6 +30,12 @@ router.get('/tickets', getAllTickets);
 
 // Endpoint to update the status of a specific ticket
 router.put('/tickets/:id', updateTicketStatus);
+
+// Endpoint to get the next waiting ticket
+router.get('/tickets/next', getNextTicket);
+
+// Endpoint to get all waiting tickets
+router.get('/tickets/waiting', getAllWaitingTickets);
 
 
 

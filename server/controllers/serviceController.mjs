@@ -1,3 +1,5 @@
+import { openDatabase } from '../config/db.mjs';
+
 // API to retrieve a service
 export const getService = (req, res) => {
     openDatabase().then((db) => {

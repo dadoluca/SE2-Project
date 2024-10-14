@@ -1,7 +1,7 @@
 // src/routes/authRoutes.mjs
 
 import express from 'express';
-import passport from '../middlewares/passportConfig.mjs'; // Adjust the path according to your project structure
+import passport from '../middlewares/passportConfig.mjs';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.post('/login', (req, res, next) => {
       return res.status(500).json({ error: 'An error occurred during authentication.' });
     }
     if (!user) {
-      return res.status(401).json({ error: info.message }); // Missing credentials
+      return res.status(401).json({ error: info.message }); 
     }
 
     // Log in the user
@@ -20,7 +20,7 @@ router.post('/login', (req, res, next) => {
       if (err) {
         return res.status(500).json({ error: 'Failed to log in user.' });
       }
-      return res.status(200).json({ message: 'Logged in successfully', user }); // Successful login
+      return res.status(200).json({ message: 'Logged in successfully', user });
     });
   })(req, res, next);
 });

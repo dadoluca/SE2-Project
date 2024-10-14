@@ -7,7 +7,7 @@ const QueueManager = () => {
 
   const handleCallNextTicket = async () => {
     try {
-      setError(''); // Reset previous error state
+      setError('');
       const ticketData = await callNextTicket();
       setTicket(ticketData.ticket);
     } catch (err) {
