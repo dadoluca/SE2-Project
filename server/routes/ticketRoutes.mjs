@@ -12,7 +12,8 @@ router.post('/tickets/call', callNextTicket);
 router.post('/tickets/create', createTicket);
 
 // Route to retrieve a ticket by ID
-router.post('/tickets/get', getTicket);
+router.get('/tickets/:id', getTicket);
+
 // Rout to get thehistory of a ticket by ID
 router.get('/tickets/:ticketID/history', getTicketHistory);
 

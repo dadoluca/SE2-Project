@@ -46,7 +46,7 @@ export const createTicket = (req, res) => {
 // API to retrieve a ticket
 export const getTicket = (req, res) => {
   openDatabase().then((db) => {
-    db.get(`SELECT * FROM tickets WHERE idTicket = ?`, [req.body.idTicket],
+    db.get(`SELECT * FROM tickets WHERE idTicket = ?`, [req.params.id],
       (err, row) => {
         if (err) {
           console.error(err);
@@ -55,7 +55,7 @@ export const getTicket = (req, res) => {
         if (!row) {
           return res.status(404).json({ message: 'Ticket not found' });
         } else {
-          res.status(200).json({ message: 'Ticket created', row });
+          res.status(200).json({ message: 'Ticket retrieved', row });
         }
       }
     );
