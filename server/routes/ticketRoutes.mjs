@@ -10,6 +10,6 @@ router.post('/tickets/call', callNextTicket);
 router.post('/tickets/create', createTicket);
 
 // Route to retrieve a ticket by ID
-router.post('/tickets/get', getTicket);
+router.get('/tickets/:id', getTicket);
 
 export default router;
