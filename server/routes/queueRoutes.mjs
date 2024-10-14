@@ -3,7 +3,8 @@ import {
     callNextTicket,
     assignTicketToCounter,
     resetQueue,
-    serveTicket
+    serveTicket,
+    getQueuesData
 } from '../controllers/queueController.mjs';
 
 const router = express.Router();
