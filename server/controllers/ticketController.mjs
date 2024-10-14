@@ -6,7 +6,6 @@ export const callNextTicket = (req, res) => {
   const serviceId = req.query.serviceId;
   openDatabase().then((db) => {
     const query = `SELECT * FROM tickets WHERE served = 0` + (serviceId ? ` AND service = ?` : '') + ` ORDER BY day ASC, idTicket ASC LIMIT 1`;
-    
     db.get(query, serviceId ? [serviceId] : [], (err, ticket) => {
       if (err) {
         console.error(err);
