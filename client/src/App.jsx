@@ -1,9 +1,10 @@
 import './App.css'
+
 import { RouterProvider, createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import RootLayout from './pages/RootLayout';
 import CustomerMainboard from './pages/CustomerMainboard';
 import Officer from './pages/Officer';
-import DisplayScreen from './pages/DisplayScreen';
+import DisplayScreen, {loader as displayScreenLoader} from './pages/DisplayScreen';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
 import QRCodePage from './components/codePage.jsx';
@@ -44,7 +45,8 @@ function App() {
         },
         {
           path: "/display-screen",
-          element: <DisplayScreen />
+          element: <DisplayScreen />,
+          loader: displayScreenLoader,
         },
         {
           path: "*",
