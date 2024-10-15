@@ -112,7 +112,7 @@ export const getQueuesData = (req, res) => {
 
     db.all(`SELECT serviceName, idTicket, icon
         FROM tickets JOIN services ON tickets.service = services.idService
-        WHERE timestamp = DATETIME('now') ORDER BY timestamp ASC LIMIT 4`, [], 
+        WHERE strftime('%Y-%m-%d', timestamp) = DATE('now') ORDER BY timestamp ASC LIMIT 4`, [], 
         (err, rows) => {
             if (err) {
                 console.error(err);
