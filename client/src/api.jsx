@@ -80,7 +80,7 @@ export const getService = async (idTicket) => {
 
 export const getAllService = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/services/all`);
+    const response = await fetch(`${API_BASE_URL}/services`);
     //, {credentials: 'include'});
 
     if (!response.ok) {
@@ -97,7 +97,7 @@ export const getAllService = async () => {
 
 export const getAllCounters = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/counters/all`);
+    const response = await fetch(`${API_BASE_URL}/counters`);
     //, {credentials: 'include'});
 
     if (!response.ok) {

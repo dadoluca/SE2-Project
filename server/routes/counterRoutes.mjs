@@ -4,7 +4,7 @@ import { getAllCounters, getCounterServices } from '../controllers/counterContro
 const router = express.Router();
 
 // Route to retrieve all counters
-router.get('/all', getAllCounters);
+router.get('/', getAllCounters);
 
 // Route to retrieve counter's services
 router.get('/:idCounter', getCounterServices);

@@ -6,6 +6,8 @@ import ticketRoutes from './routes/ticketRoutes.mjs';
 import authRoutes from './routes/authRoutes.mjs';
 import queueRoutes from './routes/queueRoutes.mjs';
 import userRoutes from './routes/userRoutes.mjs';
+import serviceRoutes from './routes/serviceRoutes.mjs';
+import counterRoutes from './routes/counterRoutes.mjs';
 import { errorMiddleware } from './middlewares/errorMiddleware.mjs';
 
 
@@ -54,14 +56,14 @@ app.use('/auth', authRoutes);
 // Use queue routes
 app.use('/api/queues', queueRoutes);
 
-// Use user routes
-app.use('/api/users', userRoutes);
-
 // Use services routes
-app.use('/api/services', userRoutes);
+app.use('/api/services', serviceRoutes);
 
 // Use counters routes
-app.use('/api/counters', userRoutes);
+app.use('/api/counters', counterRoutes);
+
+// Use user routes
+app.use('/api/users', userRoutes);
 
 
 const PORT = process.env.PORT || 5001;

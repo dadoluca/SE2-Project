@@ -7,6 +7,6 @@ const router = express.Router();
 router.get('/:idService', getService);
 
 // Route to retrieve all services
-router.get('/all', getAllServices);
+router.get('/', getAllServices);
 
 export default router;
