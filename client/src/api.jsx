@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000/api'; 
+const API_BASE_URL = 'http://localhost:5001/api'; 
 
 export const callNextTicket = async () => {
   try {
@@ -129,22 +129,6 @@ export const getCounterServices = async (idCounter) => {
   }
 };
 
-/* Example queues data:
-{
-  "message": "Queues retrieved",
-  "services": [
-    {
-      "title": "Service1",
-      "serving": "B123",
-      "queue": ["B123", "B124", "B125"]
-    },
-    {
-      "title": "Service2",
-      "serving": "A100",
-      "queue": ["A100", "A101", "A102"]
-    }
-  ]
-} */
 export const getQueuesData = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/queues/all`);
@@ -155,6 +139,7 @@ export const getQueuesData = async () => {
     }
 
     const data = await response.json();
+    console.log(data);
     return data; 
   } catch (err) {
     console.error('Failed to get queues data:', err);

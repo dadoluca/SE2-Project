@@ -108,6 +108,8 @@ export const resetQueue = (req, res) => {
 
 // API to retrieve all queues
 export const getQueuesData = (req, res) => {
+    console.log("Queues data request!");
+
 openDatabase().then((db) => {
     db.all(`SELECT serviceName, idTicket, icon
     FROM tickets JOIN services ON tickets.service = services.idService
