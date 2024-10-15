@@ -1,4 +1,5 @@
 import express from 'express';
+import { body } from 'express-validator';
 import { createTicket,
          deleteTicket,
          getTicketById,
@@ -14,7 +15,9 @@ const router = express.Router();
 
 
 // Route to insert a ticket in DB
-router.post('/tickets/create', createTicket);
+router.post('/tickets/create',
+        body("service").notEmpty().isInt(),
+        createTicket);
 
 // Endpoint to delete a specific ticket
 router.delete('/tickets/:id', deleteTicket);

@@ -4,57 +4,73 @@ import { validationResult } from 'express-validator';
 
 
 // Controller Function to Create a New Ticket
-export const createTicket = (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-  }
+export const createTicket = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
-  const serviceType = req.body.service;
-  const db = openDatabase();
-  const currentDate = new Date().toISOString();
+    const serviceType = req.body.service;
+    const db = openDatabase();
+    const currentDate = new Date().toISOString();
 
-  db.get(
-      `SELECT MAX(number) AS lastTicket FROM tickets WHERE DATE(timestamp) = DATE('now')`,
-      (err, row) => {
-          if (err) {
-              return res.status(500).json({ message: "Error retrieving ticket data." });
-          }
+    try {
+        const serviceRow = await new Promise((resolve, reject) => {
+            db.get(
+                `SELECT COUNT(*) AS count FROM services WHERE idService = ?`,
+                [serviceType],
+                (err, row) => {
+                    if (err) return reject(err);
+                    resolve(row);
+                }
+            );
+        });
 
-          const nextTicketNumber = row.lastTicket ? row.lastTicket + 1 : 1;
+        if (!serviceRow || serviceRow.count === 0) {
+            return res.status(404).json({ message: "Service not found." });
+        }
 
-          db.run(
-              `INSERT INTO tickets (number, service, status, counter, timestamp)
-               VALUES (?, ?, ?, ?, ?)`,
-              [
-                  nextTicketNumber,
-                  serviceType,
-                  'waiting',
-                  null, 
-                  currentDate 
-              ],
-              function (insertErr) {
-                  if (insertErr) {
-                      return res.status(500).json({ message: "Error creating new ticket." });
-                  }
+        const lastTicketRow = await new Promise((resolve, reject) => {
+            db.get(
+                `SELECT MAX(number) AS lastTicket FROM tickets WHERE strftime('%Y-%m-%d', timestamp) = DATE('now')`,
+                (err, row) => {
+                    if (err) return reject(err);
+                    resolve(row);
+                }
+            );
+        });
 
-                  res.status(201).json({
-                      message: "Ticket created successfully.",
-                      ticket: {
-                          id: this.lastID,
-                          service: serviceType,
-                          number: nextTicketNumber,
-                          status: 'waiting',
-                          counter: null,
-                          timestamp: currentDate 
-                      }
-                  });
-              }
-          );
-      }
-  );
+        const nextTicketNumber = lastTicketRow.lastTicket ? lastTicketRow.lastTicket + 1 : 1;
 
-  db.close();
+        const id = await new Promise((resolve, reject) => {
+            db.run(
+                `INSERT INTO tickets (idTicket, number, service, status, counter, timestamp)
+                 VALUES (?, ?, ?, ?, ?, ?)`,
+                [null, nextTicketNumber, serviceType, 'waiting', null, currentDate],
+                function (insertErr) {
+                    if (insertErr) return reject(insertErr);
+                    resolve(this.lastID);
+                }
+            );
+        });
+
+        res.status(201).json({
+            message: "Ticket created successfully.",
+            ticket: {
+                id: id,
+                service: serviceType,
+                number: nextTicketNumber,
+                status: 'waiting',
+                counter: null,
+                timestamp: currentDate 
+            }
+        });
+    } catch (error) {
+        console.error("Database error:", error.message);
+        res.status(500).json({ message: "Internal server error." });
+    } finally {
+        db.close();
+    }
 };
 
 // Remove a ticket from the queue

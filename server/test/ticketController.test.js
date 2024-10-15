@@ -1,7 +1,12 @@
 import { createTicket, deleteTicket, getTicketById, getTicketStatistics, getAllTickets, updateTicketStatus, getNextTicket, getAllWaitingTickets } from '../controllers/ticketController.mjs';
 import { openDatabase } from '../config/db.mjs';
+import { validationResult } from 'express-validator'; 
 
 jest.mock('../config/db.mjs');
+
+jest.mock('express-validator', () => ({
+    validationResult: jest.fn(),
+}));
 
 describe('Ticket Controller', () => {
     let mockDb;
@@ -23,43 +28,74 @@ describe('Ticket Controller', () => {
     });
 
     test('should create a new ticket successfully', async () => {
+        validationResult.mockReturnValue({ isEmpty: jest.fn().mockReturnValue(true) });
         const req = {
             body: {
-                service: 'Test Service'
+                service: 1
             },
-            validationResult: jest.fn().mockReturnValue({ isEmpty: jest.fn().mockReturnValue(true) }),
         };
         const res = {
             status: jest.fn().mockReturnThis(),
             json: jest.fn(),
         };
 
-        mockDb.get.mockImplementationOnce((query, callback) => callback(null, { lastTicket: 1 }));
-        mockDb.run.mockImplementationOnce((query, values, callback) => callback(null));
+        mockDb.get.mockImplementationOnce((sql, params, callback) => {
+            callback(null, { count: 1 });
+        });
+        mockDb.get.mockImplementationOnce((sql, callback) => {
+            callback(null, { lastTicket: 1 });
+        });
+
+        mockDb.run.mockImplementationOnce(function (sql, params, callback) {
+            callback.call({ lastID: 1 }, null);
+        });
 
         await createTicket(req, res);
 
         expect(res.status).toHaveBeenCalledWith(201);
-        expect(res.json).toHaveBeenCalledWith({
+        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
             message: "Ticket created successfully.",
             ticket: {
                 id: expect.any(Number),
-                service: 'Test Service',
+                service: 1,
                 number: 2,
                 status: 'waiting',
                 counter: null,
                 timestamp: expect.any(String),
             },
+        }));
+    });
+
+    test('should return 404 if service is not in DB', async () => {
+        validationResult.mockReturnValue({ isEmpty: jest.fn().mockReturnValue(true) });
+        const req = {
+            body: {
+                service: 5
+            },
+        };
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn(),
+        };
+
+        mockDb.get.mockImplementationOnce((sql, params, callback) => {
+            callback(null, { count: 0 });
         });
+
+        await createTicket(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({ message: 'Service not found.' });
     });
 
     test('should return 400 if validation fails on creating a ticket', async () => {
+        validationResult.mockReturnValue({
+            isEmpty: jest.fn().mockReturnValue(false),
+            array: jest.fn().mockReturnValue([{ msg: 'Service is required' }]), 
+        });
+
         const req = {
-            body: {},
-            validationResult: jest.fn().mockReturnValue({
-                isEmpty: jest.fn().mockReturnValue(false),
-                array: jest.fn().mockReturnValue([{ msg: 'Service is required' }]), 
-            }),
+            body: {service: null},
         };
         const res = {
             status: jest.fn().mockReturnThis(),
@@ -199,7 +235,7 @@ describe('Ticket Controller', () => {
             json: jest.fn(),
         };
 
-        mockDb.get.mockImplementationOnce((query, values, callback) => callback(null, { idTicket: 1, service: 'Test Service' }));
+        mockDb.get.mockImplementationOnce((query, callback) => callback(null, { idTicket: 1, service: 'Test Service' }));
 
         await getNextTicket(req, res);
 
@@ -214,7 +250,7 @@ describe('Ticket Controller', () => {
             json: jest.fn(),
         };
 
-        mockDb.get.mockImplementationOnce((query, values, callback) => callback(null, null));
+        mockDb.get.mockImplementationOnce((query, callback) => callback(null, null));
 
         await getNextTicket(req, res);
 
