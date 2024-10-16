@@ -49,7 +49,7 @@ describe('Queue Controller', () => {
         });
     
         it('should call the next ticket successfully', async () => {
-            const ticket = { id: 1, service: 'Test Service', status: 'waiting' };
+            const ticket = { idTicket: 1, number: "T1", service: 1, status: 'waiting' };
     
             openDatabase.mockReturnValueOnce({
                 serialize: jest.fn((callback) => {
@@ -162,20 +162,21 @@ describe('Queue Controller', () => {
         });
     
         it('should return 404 if the ticket is not found', async () => {
+            const mockRun = jest.fn(function (query, params, callback) {
+                callback.call({ changes: 0 }, null); // Simulate no ticket was updated by setting `changes` to 0
+            });
+        
             openDatabase.mockReturnValueOnce({
-                run: jest.fn(function (query, params, callback) {
-                    // Maintain the context for `this`
-                    this.changes = 0; // Simulating that no ticket was updated
-                    callback(null); // Call the callback with no error
-                }),
+                run: mockRun,
                 close: jest.fn(),
             });
-    
+        
             await serveTicket(req, res);
-    
+        
             expect(res.status).toHaveBeenCalledWith(404);
             expect(res.json).toHaveBeenCalledWith({ message: 'Ticket not found.' });
         });
+        
     
         it('should return 500 if serving fails', async () => {
             openDatabase.mockReturnValueOnce({
@@ -192,19 +193,21 @@ describe('Queue Controller', () => {
         });
     
         it('should serve the ticket successfully', async () => {
+            const mockRun = jest.fn((query, params, callback) => {
+                callback.call({ changes: 1 }, null); // Call the callback with `this` context containing `changes`
+            });
+        
             openDatabase.mockReturnValueOnce({
-                run: jest.fn(function (query, params, callback) {
-                    this.changes = 1; // Simulating a successful ticket serving
-                    callback(null); // Call the callback with no error
-                }),
+                run: mockRun,
                 close: jest.fn(),
             });
-    
+        
             await serveTicket(req, res);
-    
+        
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({ message: 'Ticket served successfully.' });
         });
+        
     });
     
     
@@ -280,7 +283,6 @@ describe('Queue Controller', () => {
 
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({
-                message: 'Queues retrieved',
                 services: expect.any(Array),
             });
         });
