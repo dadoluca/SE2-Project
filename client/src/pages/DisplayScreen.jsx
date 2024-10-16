@@ -29,7 +29,8 @@ function DisplayScreen() {
                                                 )}
                                             </h2>
                                             <h2> {service.title}</h2>
-                                            <p className={styles.servingText}>Serving: <span className={styles.servingCode}>{service.serving}</span></p>
+                                            <p className={styles.servingText}>Serving: <span className={styles.servingCode}>{service.serving}</span>
+                                                {service.counter && (<> at counter <span className={styles.servingCode}>{service.counter}</span></>)}</p>
                                             <div className={styles.queue}>
                                                 <div className={styles.ququeHeader}>
                                                     <span>⏱Next: </span>

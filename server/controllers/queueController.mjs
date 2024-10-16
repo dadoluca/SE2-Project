@@ -109,7 +109,7 @@ export const resetQueue = (req, res) => {
 export const getQueuesData = (req, res) => {
     const db = openDatabase();
 
-    db.all(`SELECT serviceName, number, icon
+    db.all(`SELECT serviceName, number, icon, counter
         FROM tickets JOIN services ON tickets.service = services.idService
         WHERE strftime('%Y-%m-%d', timestamp) = DATE('now') ORDER BY timestamp ASC LIMIT 12`, [], 
         (err, rows) => {
@@ -123,7 +123,7 @@ export const getQueuesData = (req, res) => {
                 const services = [];
 
                 rows.forEach(row => {
-                    const { serviceName, number, icon } = row;
+                    const { serviceName, number, icon, counter } = row;
 
                     let service = services.find(s => s.title === serviceName);
 
@@ -133,6 +133,7 @@ export const getQueuesData = (req, res) => {
                             title: serviceName,
                             icon: icon,
                             serving: number, // First ticket 
+                            counter: counter,
                             queue: []
                         };
                         services.push(service);
