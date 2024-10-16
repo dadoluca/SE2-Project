@@ -4,7 +4,8 @@ import {
     assignTicketToCounter,
     resetQueue,
     serveTicket,
-    getQueuesData
+    getQueuesData,
+    callNextFromLongestQueue
 } from '../controllers/queueController.mjs';
 
 const router = express.Router();

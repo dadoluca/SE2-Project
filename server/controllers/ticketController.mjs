@@ -17,7 +17,7 @@ export const createTicket = async (req, res) => {
     try {
         const serviceRow = await new Promise((resolve, reject) => {
             db.get(
-                `SELECT COUNT(*) AS count FROM services WHERE idService = ?`,
+                `SELECT serviceName FROM services WHERE idService = ?`,
                 [serviceType],
                 (err, row) => {
                     if (err) return reject(err);
@@ -26,11 +26,11 @@ export const createTicket = async (req, res) => {
             );
         });
 
-        if (!serviceRow || serviceRow.count === 0) {
+        if (!serviceRow || !serviceRow.serviceName) {
             return res.status(404).json({ message: "Service not found." });
         }
 
-        const serviceLetter = String.fromCharCode(65 + (serviceType - 1)); // 65 is ASCII for A
+        const serviceLetter = serviceRow.serviceName.charAt(0).toUpperCase();
 
         const lastTicketRow = await new Promise((resolve, reject) => {
             db.get(
@@ -70,7 +70,7 @@ export const createTicket = async (req, res) => {
                 number: ticketCode,
                 status: 'waiting',
                 counter: null,
-                timestamp: currentDate 
+                timestamp: currentDate
             }
         });
     } catch (error) {
