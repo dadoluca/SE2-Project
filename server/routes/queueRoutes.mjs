@@ -9,6 +9,9 @@ import {
 
 const router = express.Router();
 
+// Endpoint to call the next ticket from the longest queue
+router.post('/callNextFromLongestQueue', callNextFromLongestQueue);
+
 // Endpoint to call the next ticket
 router.post('/call-next', callNextTicket);
 
