@@ -4,6 +4,7 @@ import {
     assignTicketToCounter,
     resetQueue,
     getQueuesData,
+    callNextFromLongestQueue
 } from '../controllers/queueController.mjs';
 import { openDatabase } from '../config/db.mjs';
 
@@ -307,5 +308,79 @@ describe('Queue Controller', () => {
             expect(res.status).toHaveBeenCalledWith(500);
             expect(res.json).toHaveBeenCalledWith({ message: 'Error retrieving queues' });
         });
+    });
+});
+
+describe('callNextFromLongestQueue', () => {
+    let req, res;
+
+    beforeEach(() => {
+        req = {}; // No specific request body needed for this endpoint
+        res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn().mockReturnThis(),
+        };
+    });
+
+    it('should call the next ticket from the longest queue successfully', async () => {
+        const ticket = { id: 2, service: 'bill payment' }; // Sample ticket object
+    
+        // Mocking the database
+        openDatabase.mockReturnValueOnce({
+            // This will mock the 'all' function for getting the longest queue
+            all: jest.fn((query, params, callback) => {
+                // Simulate fetching the longest queue with tickets
+                callback(null, [[ticket]]); // Return the longest queue with tickets
+            }),
+            // This will mock the 'get' function for retrieving the first waiting ticket
+            get: jest.fn((query, params, callback) => {
+                // Simulate getting a specific waiting ticket
+                callback(null, ticket); // Return the ticket as if it's found
+            }),
+            run: jest.fn((query, params, callback) => {
+                callback(null); // Simulate a successful update
+            }),
+            close: jest.fn(),
+        });
+    
+        await callNextFromLongestQueue(req, res);
+    
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({ 
+            message: 'Next ticket called successfully.', // Ensure this message is correct
+            ticket 
+        });
+    });
+    
+    
+
+    it('should return 404 if no waiting tickets are found', async () => {
+        openDatabase.mockReturnValueOnce({
+            all: jest.fn((query, params, callback) => {
+                // Simulate no waiting tickets found
+                callback(null, []); // Return an empty array
+            }),
+            close: jest.fn(),
+        });
+    
+        await callNextFromLongestQueue(req, res);
+    
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({ message: 'No tickets in any queue.' }); // Updated expected message
+    });
+    
+
+    it('should return 500 if there is an error during database query', async () => {
+        openDatabase.mockReturnValueOnce({
+            all: jest.fn((query, params, callback) => {
+                callback(new Error('Database error')); // Simulate database error
+            }),
+            close: jest.fn(),
+        });
+    
+        await callNextFromLongestQueue(req, res);
+    
+        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.json).toHaveBeenCalledWith({ error: 'Failed to retrieve queue information.' });
     });
 });
