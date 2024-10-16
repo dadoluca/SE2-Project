@@ -45,8 +45,6 @@ h2 {
 }
 
 .ququeHeader {
-    display: flex;
-    justify-content: space-between;
     color: #D66406;
     font-weight: bold;
     font-size: x-large;
@@ -54,8 +52,6 @@ h2 {
 }
 
 .queueItem {
-    display: flex;
-    justify-content: space-between;
     color: #7b3b06;
     font-weight: bold;
     padding: 5px 0;

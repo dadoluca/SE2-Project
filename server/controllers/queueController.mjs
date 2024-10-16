@@ -110,9 +110,9 @@ export const resetQueue = (req, res) => {
 export const getQueuesData = (req, res) => {
     const db = openDatabase();
 
-    db.all(`SELECT serviceName, idTicket, icon
+    db.all(`SELECT serviceName, number, icon
         FROM tickets JOIN services ON tickets.service = services.idService
-        WHERE strftime('%Y-%m-%d', timestamp) = DATE('now') ORDER BY timestamp ASC LIMIT 4`, [], 
+        WHERE strftime('%Y-%m-%d', timestamp) = DATE('now') ORDER BY timestamp ASC LIMIT 12`, [], 
         (err, rows) => {
             if (err) {
                 console.error(err);
@@ -124,27 +124,30 @@ export const getQueuesData = (req, res) => {
                 const services = [];
 
                 rows.forEach(row => {
-                    const { serviceName, idTicket, iconPath } = row;
+                    const { serviceName, number, icon } = row;
 
                     let service = services.find(s => s.title === serviceName);
 
                     if (!service) {
+                        // If the service does not exist, create it and set the first ticket as 'serving'                        
                         service = {
                             title: serviceName,
-                            icon: iconPath,
-                            serving: idTicket, // first ticket in queue
+                            icon: icon,
+                            serving: number, // First ticket 
                             queue: []
                         };
                         services.push(service);
+                    } else {
+                    // Add only subsequent tickets to 'queue'
+                        service.queue.push({ number: number });
                     }
-
-                    service.queue.push(idTicket);
                 });
 
-                return res.status(200).json({ message: 'Queues retrieved', services: services });
+                return res.status(200).json({ services });
             }
         }
     );
 
     db.close();
-}
+};
+
