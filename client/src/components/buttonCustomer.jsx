@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {createTicket} from '../api.jsx'
 
@@ -9,9 +10,11 @@ function CustButton(props) {
     const navigate = useNavigate();
 
     const handleButton = () =>{
-        const data = createTicket(props.serviceId);
         const path = '/customer-mainboard' + props.routePath;
-        navigate(path, {ticketId: data.ticket.id});
+        createTicket(props.serviceId).then((res) => {
+            const ticket = res.ticket.number;
+            navigate(path, {state: {ticket: ticket}});
+        });
     }
 
     return (
@@ -27,6 +30,7 @@ function CustButton(props) {
 
 CustButton.propTypes = {
     serviceId: PropTypes.number,
+    service: PropTypes.string,
     text: PropTypes.string,
     imag: PropTypes.string,
     routePath: PropTypes.string
