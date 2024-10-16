@@ -18,13 +18,12 @@ export const callNextTicket = (req, res) => {
                     return res.status(404).json({ message: 'No waiting tickets available.' });
                 }
 
-                
                 db.run(
                     `UPDATE tickets SET status = 'called', counter = ? WHERE id = ?`,
                     [counterId, ticket.id],
                     function (updateErr) {
+                        db.close(); // Move db.close() here to ensure it's called after all operations.
                         if (updateErr) {
-                            db.close(); 
                             return res.status(500).json({ error: 'Failed to update ticket status.' });
                         }
 
@@ -38,9 +37,8 @@ export const callNextTicket = (req, res) => {
             }
         );
     });
-
-    db.close();
 };
+
 
 
 export const serveTicket = (req, res) => {
@@ -50,12 +48,12 @@ export const serveTicket = (req, res) => {
     db.run(
         `UPDATE tickets SET status = 'served' WHERE id = ?`,
         [ticketId],
-        function (err) {
+        function (err) { // Use function to maintain context of 'this'
             if (err) {
                 return res.status(500).json({ error: 'Failed to serve the ticket.' });
             }
 
-            if (this.changes === 0) {
+            if (this.changes === 0) { // 'this' refers to the context of the run method
                 return res.status(404).json({ message: 'Ticket not found.' });
             }
 
@@ -65,6 +63,7 @@ export const serveTicket = (req, res) => {
 
     db.close();
 };
+
 
 
 
