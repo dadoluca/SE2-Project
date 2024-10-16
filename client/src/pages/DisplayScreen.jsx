@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { defer, Await, useLoaderData } from 'react-router-dom';
+import { Image } from 'react-bootstrap';
 import {getQueuesData} from '../api.jsx';
 import styles from './DisplayScreen.module.css';
 
@@ -18,12 +19,21 @@ function DisplayScreen() {
                                 <div className={styles.serviceContainers}>
                                     {loadedData.services.map((service, index) => (
                                         <div key={index} className={styles.serviceBox}>
-                                            <h2>{service.icon} {service.title}</h2>
+                                            <h2>{service.icon && (
+                                                    <Image
+                                                        src={service.icon}
+                                                        alt="Service Image"
+                                                        fluid
+                                                        className={styles.image}
+                                                    />
+                                                )}
+                                            </h2>
+                                            <h2> {service.title}</h2>
                                             <p className={styles.servingText}>Serving: <span className={styles.servingCode}>{service.serving}</span></p>
                                             <div className={styles.queue}>
                                                 <div className={styles.ququeHeader}>
-                                                    <span>Next :</span>
-                                                    <span>⏱</span>
+                                                    <span>⏱Next: </span>
+                                                    <span></span>
                                                 </div>
                                                 <hr />  
                                                 {service.queue.map((item, idx) => (

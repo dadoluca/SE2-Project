@@ -44,13 +44,13 @@ const scryptAsync = (password, salt) => {
     )`);
 
     await runAsync(db, `CREATE TABLE IF NOT EXISTS tickets (
-            idTicket INTEGER PRIMARY KEY,
-            number TEXT,
-            service INTEGER,
-            status TEXT CHECK(status IN ('waiting', 'called', 'served')) DEFAULT 'waiting',
-            counter INTEGER,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (service) REFERENCES services (idService)
+      idTicket INTEGER PRIMARY KEY,
+      number TEXT,
+      service INTEGER,
+      status TEXT CHECK(status IN ('waiting', 'called', 'served')) DEFAULT 'waiting',
+      counter INTEGER,
+      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (service) REFERENCES services (idService)
     )`);
     
     await runAsync(db, `CREATE TABLE IF NOT EXISTS services (
@@ -72,16 +72,32 @@ const scryptAsync = (password, salt) => {
       (1),
       (2)`);  
 
-    await runAsync(db, `INSERT INTO services (idService, serviceName, serviceTime) VALUES
-      (1, 'bill payment', 10),
-      (2, 'withdrawals', 5),
-      (3, 'shipments', 7)`);
+    await runAsync(db, `INSERT INTO services (idService, serviceName, serviceTime, icon) VALUES
+      (1, 'BILL PAYMENT', 10, '/icons/bill_payment.png'),
+      (2, 'WITHDRAWAL', 7, '/icons/withdrawal.png'),
+      (3, 'SHIPMENT', 12, '/icons/shipment.png')
+    `);
 
     await runAsync(db, `INSERT INTO serviceForCounter (counter, service) VALUES
+      (1, 1),
       (1, 2),
-      (1, 3),
-      (2, 1),
-      (2, 2)`);
+      (2, 3)
+    `);
+
+    await runAsync(db, `INSERT INTO tickets (number, service, status) VALUES
+      ('B123', 1, 'served'),
+      ('B124', 1, 'waiting'),
+      ('B125', 1, 'waiting'),
+      ('B126', 1, 'waiting'),
+      ('W123', 2, 'served'),
+      ('W124', 2, 'waiting'),
+      ('W125', 2, 'waiting'),
+      ('S123', 3, 'served'),
+      ('S124', 3, 'waiting'),
+      ('S125', 3, 'waiting'),
+      ('S126', 3, 'waiting'),
+      ('S127', 3, 'waiting')
+    `);
 
     //TODO: add crypt for password
     await runAsync(db, `INSERT INTO users (idUser, name, email, password, role) VALUES
