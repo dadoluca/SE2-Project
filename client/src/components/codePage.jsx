@@ -19,7 +19,7 @@ const QRCodePage = () =>{
                 <div className="QRCodeContainer">
                     <QRCodeGenerator ticket={location.state.ticket}/>
                 </div>
-                <Button className="backHomeButton" onClick={handleBackHome}>
+                <Button variant="success" className="backHomeButton" onClick={handleBackHome}>
                         {"🏠BACK TO HOME"}
                 </Button>
             </div>

@@ -1,13 +1,8 @@
-.qrCodePage {
-    text-align: center;
-    background-color: #f5f5dc; /* Matches the color from your image */
-    padding: 20px;
-}
-
 .QRCodeContainer {
     margin: 0 auto;
     padding: 20px; /* Add some padding to create space around the QR code */
     display: inline-block; /* To keep QR code centered */
+    justify-content: center;
 }
 
 .backHomeButton {
