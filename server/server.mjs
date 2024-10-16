@@ -44,6 +44,9 @@ app.use(express.json());
 // Middleware for static file path
 app.use(express.static('client/public'));
 
+//To serve icon images
+app.use(express.static('public'));
+
 // API route for tickets
 app.use('/api', ticketRoutes);
 

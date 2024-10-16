@@ -27,8 +27,8 @@ function DisplayScreen() {
                                                         className={styles.image}
                                                     />
                                                 )}
-                                                {service.title}
                                             </h2>
+                                            <h2> {service.title}</h2>
                                             <p className={styles.servingText}>Serving: <span className={styles.servingCode}>{service.serving}</span></p>
                                             <div className={styles.queue}>
                                                 <div className={styles.ququeHeader}>

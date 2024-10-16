@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://localhost:5001/api'; 
+const SERVR_BASE_URL = 'http://localhost:5001';
+const API_BASE_URL = `${SERVR_BASE_URL}/api`; 
+
 
 export const callNextTicket = async () => {
   try {
@@ -139,7 +141,12 @@ export const getQueuesData = async () => {
     }
 
     const data = await response.json();
-    console.log(data);
+    data.services = data.services.map(service => ({
+      ...service,
+      icon: `${SERVR_BASE_URL}${service.icon}`
+    }));  
+    console.log(data)
+
     return data; 
   } catch (err) {
     console.error('Failed to get queues data:', err);

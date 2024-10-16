@@ -1,6 +1,5 @@
 /* CSS applied only on the DisplayScreen page */
 .displayScreen {
-    background-color: #f0e4cc;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -10,7 +9,7 @@
 }
 
 .serviceContainers {
-    margin-top: 10vh;
+    margin-top: 7vh;
     display: flex;
     gap: 5vw;
 }
@@ -22,6 +21,12 @@
     border-radius: 8px;
     width: 20vw;
     text-align: center;
+}
+
+.image{
+    max-width:  100px;
+    max-height: 100px;
+    margin: 1px;
 }
 
 h2 {
