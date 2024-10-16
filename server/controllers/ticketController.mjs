@@ -30,9 +30,15 @@ export const createTicket = async (req, res) => {
             return res.status(404).json({ message: "Service not found." });
         }
 
+        const serviceLetter = String.fromCharCode(65 + (serviceType - 1)); // 65 is ASCII for A
+
         const lastTicketRow = await new Promise((resolve, reject) => {
             db.get(
-                `SELECT MAX(number) AS lastTicket FROM tickets WHERE strftime('%Y-%m-%d', timestamp) = DATE('now')`,
+                `SELECT MAX(CAST(SUBSTR(number, 2) AS INTEGER)) AS lastTicket 
+                 FROM tickets 
+                 WHERE strftime('%Y-%m-%d', timestamp) = DATE('now') 
+                 AND SUBSTR(number, 1, 1) = ?`,
+                [serviceLetter],
                 (err, row) => {
                     if (err) return reject(err);
                     resolve(row);
@@ -40,13 +46,15 @@ export const createTicket = async (req, res) => {
             );
         });
 
-        const nextTicketNumber = lastTicketRow.lastTicket ? lastTicketRow.lastTicket + 1 : 1;
+        const nextTicketNumber = lastTicketRow.lastTicket ? lastTicketRow.lastTicket + 1 : 100;
+
+        const ticketCode = `${serviceLetter}${nextTicketNumber}`;
 
         const id = await new Promise((resolve, reject) => {
             db.run(
                 `INSERT INTO tickets (idTicket, number, service, status, counter, timestamp)
                  VALUES (?, ?, ?, ?, ?, ?)`,
-                [null, nextTicketNumber, serviceType, 'waiting', null, currentDate],
+                [null, ticketCode, serviceType, 'waiting', null, currentDate],
                 function (insertErr) {
                     if (insertErr) return reject(insertErr);
                     resolve(this.lastID);
@@ -59,7 +67,7 @@ export const createTicket = async (req, res) => {
             ticket: {
                 id: id,
                 service: serviceType,
-                number: nextTicketNumber,
+                number: ticketCode,
                 status: 'waiting',
                 counter: null,
                 timestamp: currentDate 

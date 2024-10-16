@@ -151,3 +151,66 @@ export const getQueuesData = (req, res) => {
     db.close();
 };
 
+// Call the next ticket from the longest queue
+export const callNextFromLongestQueue = (req, res) => {
+    const db = openDatabase();
+
+    // Step 1: Fetch the number of waiting tickets per service
+    db.all(
+        `SELECT service, COUNT(*) as count 
+         FROM tickets 
+         WHERE status = 'waiting' 
+         GROUP BY service 
+         ORDER BY count DESC 
+         LIMIT 1`,
+        [],
+        (err, rows) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to retrieve queue information.' });
+            }
+
+            // Step 2: Check if there is any service with waiting tickets
+            if (rows.length === 0) {
+                return res.status(404).json({ message: 'No tickets in any queue.' });
+            }
+
+            const { service } = rows[0];
+
+            // Step 3: Fetch the first waiting ticket from the service with the longest queue
+            db.get(
+                `SELECT * FROM tickets 
+                 WHERE status = 'waiting' AND service = ? 
+                 ORDER BY created_at ASC 
+                 LIMIT 1`,
+                [service],
+                (err, ticket) => {
+                    if (err) {
+                        return res.status(500).json({ error: 'Failed to fetch the next ticket.' });
+                    }
+
+                    if (!ticket) {
+                        return res.status(404).json({ message: 'No waiting tickets available.' });
+                    }
+
+                    // Step 4: Update the ticket status to "called"
+                    db.run(
+                        `UPDATE tickets SET status = 'called' WHERE id = ?`,
+                        [ticket.id],
+                        function (err) {
+                            if (err) {
+                                return res.status(500).json({ error: 'Failed to update ticket status.' });
+                            }
+
+                            return res.status(200).json({
+                                message: 'Next ticket called successfully.',
+                                ticket: ticket,
+                            });
+                        }
+                    );
+                }
+            );
+        }
+    );
+
+    db.close();
+};

@@ -3,7 +3,7 @@ import './App.css'
 import { RouterProvider, createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import RootLayout from './pages/RootLayout';
 import CustomerMainboard from './pages/CustomerMainboard';
-import Officer from './pages/Officer';
+import Officer from './pages/Officer/Officer.jsx';
 import DisplayScreen, {loader as displayScreenLoader} from './pages/DisplayScreen';
 import ErrorPage from './pages/ErrorPage';
 import HomePage from './pages/HomePage';
