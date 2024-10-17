@@ -66,16 +66,26 @@ sections:
 
 ## ASSESSMENT
 
-- What caused your errors in estimation (if any)?
+1. **What caused your errors in estimation? (if any)**
+   - We didn’t have all tasks clearly defined during sprint planning. This was partly because we didn’t know the full team size at the start, one person joined late, and another had to leave. Also, we weren’t sure if testing should be done as separate tasks or included in longer tasks in their verification part.
+   - Our lack of experience with Agile made it hard to estimate some tasks accurately, underestimating how long they would take (but only for a small percentage of tasks). We aimed for 2-hour tasks but forgot to consider possible issues, like learning new libraries or needing extra resources.
+   - We included part of a feature that wasn’t meant for this sprint, which was actually part of a lower-priority story. This mistake cost extra time and effort, showing us the importance of sticking to our plan.
 
-- What lessons did you learn (both positive and negative) in this sprint?
+2. **What lessons did you learn (both positive and negative) in this sprint**
+   - We learned how important it is to fully define all the work at the beginning of the sprint.
+   - We also saw the need to prioritize tasks. Some team members, that have already finished their main tasks, worked on less important tasks while others struggled to complete the main ones. If we had prioritized better, we could have focused on major tasks first and had time left for any last-minute issues.
 
-- Which improvement goals set in the previous retrospective were you able to achieve? 
-  
-- Which ones you were not able to achieve? Why?
+3. **Which improvement goals set in the previous retrospective were you able to achieve?**
+   - This is our first retrospective, so we didn’t have any previous goals to review.
 
-- Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)
+4. **Which ones you were not able to achieve? Why?**
+   - Since this is the first retrospective, we don’t have any previous goals that we missed.
 
-  > Propose one or two
+5. **Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)**
+   - *Goal 1:* We want to avoid any confusion about which stories to implement and which not to implement. To achieve this, we’ll spend more time reviewing all stories together at the start, making sure each team member fully understands the scope.
+   - *Goal 2:* We’ll spend more time on sprint planning to define tasks better. This will help us stay focused and avoid confusion about what to work on.
+   - *Goal 3:* We want to test the code more completely and at different levels. This means we’ll need to better estimate the amount of work needed for testing, so we can make sure it fits into our sprint planning.
+   - *Goal 4:* We need to focus on the priority of the features to implement. This means consistently identifying and working on the most important features first, to ensure they are completed early and reduce the risk of missing key functionality.
 
-- One thing you are proud of as a Team!!
+6. **One thing you are proud of as a team!**
+   - Clear roles and responsibilities! Thanks to which our team worked very well together. Also, the stakeholders and product owner really liked the interface we designed, which shows the hard work and dedication of everyone involved.
